@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Parses config and inputs from flywheel and calls antsRegistrationSyNQuick.
+
+CONTAINER="[noah10/output-name-test:0.0.1]"
+echo -e "$CONTAINER Initiated"
+
+
+###############################################################################
+# Built to flywheel-v0 spec.
+
+FLYWHEEL_BASE=/flywheel/v0
+OUTPUT_DIR=$FLYWHEEL_BASE/output
+MANIFEST=$FLYWHEEL_BASE/manifest.json
+CONFIG_FILE=$FLYWHEEL_BASE/config.json
+
+###############################################################################
+# Configure the ENV
+
+export USER=Flywheel
+
+##############################################################################
+# Parse configuration
+
+function parse_config {
+
+  CONFIG_FILE=$FLYWHEEL_BASE/config.json
+  MANIFEST_FILE=$FLYWHEEL_BASE/manifest.json
+
+  if [[ -f $CONFIG_FILE ]]; then
+    echo "$(jq -r '.'$1'.'$2 $CONFIG_FILE)"
+  fi
+}
+
+text_input_file="$(parse_config 'inputs' 'text.location.path')"
+echo "text_input_file: ${text_input_file}"
+
+fname=$(basename ${text_input_file})
+outfile=${OUTPUT_DIR}/${fname}
+echo 'This is the output' > $outfile
+echo "{'acquisition': {'files': [$outfile]}}" > $OUTPUT_DIR/.manifest.json

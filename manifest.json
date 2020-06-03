@@ -1,0 +1,31 @@
+{
+    "label": "Output name test",
+    "name": "fw-output-name-test",
+    "description": "Tests to see what happens when an output file name collides with the input file name",
+    "author": "Noah Mercer",
+    "url": "",
+    "maintainer": "Noah Mercer <noahmerc@usc.edu>",
+    "source": "",
+    "license": "BSD-2-Clause",
+    "version": "0.0.1",
+    "custom": {
+        "docker-image": "noah10/output-name-test:0.0.1",
+        "gear-builder": {
+            "category": "analysis",
+            "image": "noah10/output-name-test:0.0.1"
+        }
+    },
+    "config": {
+    },
+    "inputs": {
+        "text": {
+            "base": "file",
+            "description": "Text file with whatever short text you want in it",
+            "type": {
+                "enum": [
+                    "text"
+                ]
+            }
+        }
+    }
+}
